@@ -9,7 +9,8 @@ def spider(max_pages):
 		plain_text = source_code.text
 		soup = BeautifulSoup(plain_text)
 		for link in soup.findAll( 'a' , {'class': 'view_detail_button'}):
-			href = 'https://internshala.com/internships' + link.get('href')
+			href = 'https://internshala.com' + link.get('href')
+			print(href + "\n")
 			get_single_internship_data(href)
 		page += 1	
 
@@ -17,7 +18,7 @@ def get_single_internship_data(item_url):
 	source_code = requests.get(item_url)
 	plain_text = source_code.text
 	soup = BeautifulSoup(plain_text)
-	for item_name in soup.findAll('div' , {'id': 'skillsContainer'}):
-		print(item_name.string)
+	for skills in soup.findAll('span' , {'id': 'skillNames'}):
+		print("Skills Required : " + skills.string + "\n")
 		
 spider(1)
